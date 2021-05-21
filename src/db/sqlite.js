@@ -43,11 +43,14 @@ async function teardown() {
  * Returns an array of songs that include the parameter in the title.
  *
  * @param {string} q The string to query.
- * @return [{name: string}] An array of objects with a name property
+ * @return [{Name: string, 
+ * 					Composer: string
+ * 					Milliseconds:number}] 
+ * 					An array of objects with a the song's name, composer, and length in milliseconds
  */
 async function searchTracks(q) {
 	return new Promise((acc, rej) => {
-		let sql = `SELECT DISTINCT Name name FROM tracks
+		let sql = `SELECT DISTINCT Name, Composer, Milliseconds FROM tracks
 		WHERE name LIKE ?
 		ORDER BY name`;
 
