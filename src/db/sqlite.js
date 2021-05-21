@@ -4,6 +4,10 @@ const location = './src/db/chinook.db';
 
 let db;
 
+/**
+ * Initialize the database.
+ *
+ */
 function init() {
 	const dirName = require('path').dirname(location);
 	if (!fs.existsSync(dirName)) {
@@ -22,6 +26,10 @@ function init() {
 	});
 }
 
+/**
+ * Gracefully close the database
+ *
+ */
 async function teardown() {
 	return new Promise((acc, rej) => {
 		db.close(err => {
@@ -31,6 +39,12 @@ async function teardown() {
 	});
 }
 
+/**
+ * Returns an array of songs that include the parameter in the title.
+ *
+ * @param {string} q The string to query.
+ * @return [{name: string}] An array of objects with a name property
+ */
 async function searchTracks(q) {
 	return new Promise((acc, rej) => {
 		let sql = `SELECT DISTINCT Name name FROM tracks

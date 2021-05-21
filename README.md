@@ -13,5 +13,5 @@ Thanks for checking out my song search app! You won't believe what it can do!
 ```curl http://localhost:3000/tracks/```
 
 ### Search Song Title
-```curl http://localhost:3000/tracks/{query}```
-*Replace {query} with your search term. You can try 'minor'*
+```curl http://localhost:3000/tracks/your-query```
+*Replace 'your-query' with your search term. You can try 'minor'*
