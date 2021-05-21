@@ -8,6 +8,11 @@ Thanks for checking out my song search app! You won't believe what it can do!
 2. Run the Docker image
 `docker run -dp 3000:3000 josh-cross-demo`
 
+## Run the app
+1. Follow the Getting Started steps
+2. Open your browser (Firefox suggested)
+3. Navigate to http://localhost:3000
+
 ## cURL commands
 ### List All Tracks
 `curl http://localhost:3000/tracks/`
