@@ -61,9 +61,17 @@ async function searchTracks(q) {
 	});
 }
 
+/**
+ * Returns an array of all songs in the database.
+ *
+ * @return [{Name: string, 
+ * 					Composer: string
+ * 					Milliseconds:number}] 
+ * 					An array of objects with a the song's name, composer, and length in milliseconds
+ */
 async function getTracks(id) {
 	return new Promise((acc, rej) => {
-		db.all('SELECT trackid, name FROM tracks', (err, rows) => {
+		db.all('SELECT Name, Composer, Milliseconds FROM tracks', (err, rows) => {
 			if (err) return rej(err);
 			acc(rows);
 		});
