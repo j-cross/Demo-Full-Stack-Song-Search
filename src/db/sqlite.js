@@ -56,9 +56,29 @@ async function searchTracks(q) {
 
 		db.all(sql, ['%'+q+'%'], (err, rows) => {
 			if (err) return rej(err);
-			acc(rows);
+			// console.log('I suggest this word - ', suggestedWord(rows, q))
+			let suggestion = suggestedWord(rows, q);
+			acc({rows, suggestion});
 		});
 	});
+}
+
+function suggestedWord(arr, q) {
+	if(arr.length == 0)
+		return null;
+
+	var maxEl = {
+		result:arr[0],
+		weight: 0
+	};
+
+	for(let i = 0; i < arr.length; i++){
+		let weight = 1 / (arr[i].Name.indexOf(q) + 1);
+		weight = arr[i].Name.toLowerCase().startsWith(q)?weight+1:weight;
+		maxEl = weight > maxEl.weight?{result: arr[i], weight}:maxEl;
+	}
+
+	return maxEl;
 }
 
 /**

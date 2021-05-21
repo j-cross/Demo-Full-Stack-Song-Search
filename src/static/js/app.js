@@ -64,15 +64,29 @@ function SearchForm({ onChange }) {
 	 * @param {string} Query to search database of song titles
 	 * @return {array} List of songs in the database which include the query string
 	 */
-	const fetchResults = q => {
+	const fetchResults = e => {
+		let q = e.target.value;
 		setQuery(q);
 		setLoading(true);
+		console.log(e);
 		fetch('/tracks/' + q)
 			.then(r => r.json())
-			.then(tracks => {
+			.then(res => {
 				if(q === '') onChange(null);
-				else onChange(tracks);
-				setSongCount(tracks.length);
+				else onChange(res.rows);
+				console.log('Suggestion: ', res.suggestion);
+				let w = res.suggestion.result.Name.split(' ')
+				let autocomplete = w[0];
+				for(let i of w){
+					console.log(i);
+					if(i.toLowerCase().startsWith(q)){
+						console.log(i + ' starts with ' + q)
+						autocomplete = i;
+						break;
+					}
+				}
+				console.log('Autocomplete: ', autocomplete);
+				setSongCount(res.rows.length);
 				setLoading(false);
 			})
 	};
@@ -82,7 +96,7 @@ function SearchForm({ onChange }) {
 			<InputGroup className="mb-3">
 				<Form.Control
 					value={query}
-					onChange={e => fetchResults(e.target.value)}
+					onChange={e => fetchResults(e)}
 					type="text"
 					placeholder="Search the song database"
 					aria-describedby="basic-addon1"
@@ -133,9 +147,9 @@ function ItemDisplay({ item }) {
 				<Col xs={8} className="inner">
 					{item.Name} - {item.Composer}
 				</Col>
-				<Col xs={3} className="text-center text-info inner">
+				<Col xs={3} className="text-right text-info inner">
+					<span style={{marginRight: 5}}>{time(item.Milliseconds)}</span>
 					<i className="fa fa-clock" />
-					<span style={{marginLeft: 5}}>{time(item.Milliseconds)}</span>
 				</Col>
 			</Row>
 		</Container>
