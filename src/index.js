@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
 const db = require('./db/sqlite');
-const searchItems = require('./routes/searchTracks');
+const searchTracks = require('./routes/searchTracks');
 const getTracks = require('./routes/getTracks');
 
 app.use(require('body-parser').json());
 app.use(express.static(__dirname + '/static'));
 
-app.get('/items/:query', searchItems);
+app.get('/tracks/:query', searchTracks);
 app.get('/tracks', getTracks);
 
 db.init().then(() => {
